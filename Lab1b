@@ -1,0 +1,48 @@
+// ADA
+// Recursive program to find GCD
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <ctype.h>
+#include <conio.h>
+
+int GCD(int m,int n)
+{
+    int r;
+    while(n != 0)
+    {
+        r = m % n;
+        m = n;
+        n = r;
+    }
+    return m;
+}
+
+int main()
+{
+    int m,n,k,i;
+    printf("Enter the numbers whose GCD you want to find: ");
+    scanf("%d %d",&m,&n);
+    if(n > m)
+    {
+        i = m;
+        m = n;
+        n = i;
+    }
+    if(n == 0 && m == 0)
+    {
+        printf("Error");
+        return 0;
+    }
+    if(n < 0 || m < 0)
+    {
+        printf("Error");
+        return 0;
+    }
+    k = GCD(m,n);
+    printf("\nThe GCD is: %d",k);
+
+    return 0;
+}
