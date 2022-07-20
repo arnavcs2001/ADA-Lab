@@ -1,0 +1,66 @@
+// ADA
+/* Sort a given set of N integer elements using Selection Sort technique and compute its time taken.
+   Run the program for different values of N and record the time taken to sort. */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <ctype.h>
+#include <conio.h>
+#include <time.h>
+
+void swap(int *x, int *y)
+{
+    int temp = *x;
+    *x = *y;
+    *y = temp;
+}
+  
+void selectionSort(int arr[], int size)
+{
+    int i, j, min_index;
+    for (i = 0; i<size-1; i++) // One by one move boundary of unsorted subarray
+    {
+        min_index = i;
+        for (j = i+1; j <size; j++) // Find the minimum element in unsorted array
+        {
+          if (arr[j] < arr[min_index])
+          {
+            min_index = j;
+          }
+        }
+        swap(&arr[min_index], &arr[i]); // Swap the found minimum element with the first element
+    }
+}
+  
+void printArray(int arr[], int size)
+{
+    int i;
+    for (i=0; i<size; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+  
+int main()
+{
+    int size,i;
+    printf("Enter the size of the array: ");
+    scanf("%d",&size);
+    int arr[size];
+    time_t start,end;                          
+    for(i=size-1;i>=0;i--) 
+    {
+        arr[i] = i;
+    }
+    start = clock();
+    selectionSort(arr, size);
+    end = clock();
+    // Not required to print as input we will be taking is huge
+    /* printf("\nSorted array: \n");
+       printArray(arr, size); */
+    printf("\nTime taken: %f",(difftime(end,start)));
+    return 0;
+}
