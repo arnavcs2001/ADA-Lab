@@ -1,0 +1,64 @@
+// ADA
+/* Implement Recursive Linear search and determine the time required to search an element.
+   Repeat the experiment for different values of N and plot a graph of the time taken versus N. */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <ctype.h>
+#include <conio.h>
+#include <time.h>
+
+int linearSearch(int arr[], int size, int x) 
+{
+    int rec;
+    size = size - 1;
+    if (size >= 0) 
+    {
+        if (arr[size] == x)
+        {
+            return size;
+        }
+        else
+        {
+            rec = linearSearch(arr, size, x);            
+        }
+    }
+    else
+    {
+        return -1;
+    }
+    return rec;
+}
+  
+int main()
+ {
+    int x,index,size,i;
+    printf("Enter the size of the array: ");
+    scanf("%d",&size);
+    int arr[size];
+    /* printf("\nPlease enter the elements: "); We don't ask the user for input. This is because we want to calculate time taken so we need a 
+                                                large size array (since in small size array time taken to execute is barely visible) which the
+                                                user will not be able to enter . */ 
+    time_t start,end;                          
+    for(i=0;i<size;i++)
+    {
+        arr[i] = i;
+    }
+    printf("\nEnter the element to search for: ");
+    scanf("%d",&x);
+    start = clock();
+    index = linearSearch(arr, size, x);
+    end = clock();
+    if (index != -1)
+    {
+        printf("\nElement %d is present at index %d\n", x, index);
+    }
+    else
+    {
+        printf("\nElement %d is not present\n", x);
+    }
+    printf("\nTime taken: %f",(difftime(end,start)));
+    return 0;
+}
