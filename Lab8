@@ -1,0 +1,97 @@
+// ADA 
+// Program to sort a given set of N integer elements using Merge Sort technique and compute its time taken.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <ctype.h>
+#include <conio.h>
+#include <time.h>
+#include <stdbool.h>
+
+void merge(int A[], int mid, int low, int high)
+{
+    int i, j, k, B[high+1];
+    i = low;
+    j = mid + 1;
+    k = low;
+
+    while(i <= mid && j <= high)
+    {
+        if(A[i] < A[j])
+        {
+            B[k] = A[i];
+            i++;
+            k++;
+        }
+        else
+        {
+            B[k] = A[j];
+            j++;
+            k++;
+        }
+    }
+    while(i <= mid)
+    {
+        B[k] = A[i];
+        k++;
+        i++;
+    }
+    while(j <= high)
+    {
+        B[k] = A[j];
+        k++;
+        j++;
+    }
+    for(int i = low; i <= high; i++)
+    {
+        A[i] = B[i];
+    }
+}
+
+void mergeSort(int A[], int low, int high)
+{
+    int mid; 
+    if(low<high)
+    {
+        mid = (low + high) /2;
+        mergeSort(A, low, mid);
+        mergeSort(A, mid+1, high);
+        merge(A, mid, low, high);
+    }
+}
+
+void printArray(int A[], int n)
+{
+    int i;
+    for(i = 0; i < n; i++)
+    {
+        printf("%d ", A[i]);
+    }
+    printf("\n");
+}
+  
+int main()
+{
+    int size,i;
+    printf("Enter the size of the array: ");
+    scanf("%d",&size);
+    int arr[size];
+    time_t start,end;                          
+    for(i=0;i<size;i++) 
+    {
+        arr[i] = rand(); // Using random function to generate random numbers each time 
+    }
+    // Not required to print as input we will be taking is huge
+    /* printf("\nInput array: \n");
+       printArray(arr, size); */
+    start = clock();
+    mergeSort(arr,0,size-1);
+    end = clock();
+    // Not required to print as output we will be taking is huge
+    /* printf("\nSorted array: \n");
+       printArray(arr, size); */
+    printf("\nTime taken: %f",(difftime(end,start)));
+    return 0;
+}
