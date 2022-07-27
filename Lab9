@@ -1,0 +1,87 @@
+// ADA 
+// Program to Sort a given set of N integer elements using Quick Sort technique and compute its time taken.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <ctype.h>
+#include <conio.h>
+#include <time.h>
+#include <stdbool.h>
+
+int partition(int A[], int low, int high)
+{
+    int i,j,pivot,temp;
+    pivot = A[low];
+    i = low + 1;
+    j = high;
+    do
+    {
+        while(A[i] <= pivot)
+        {
+            i++;
+        }
+        while(A[j] > pivot)
+        {
+            j--;
+        }
+        if(i < j)
+        {
+            temp = A[i];
+            A[i] = A[j];
+            A[j] = temp;
+        }
+    }while(i < j);
+
+    // Swap A[low] and A[j]
+    temp = A[low];
+    A[low] = A[j];
+    A[j] = temp;
+    return j;
+}    
+
+void quickSort(int A[], int low, int high)
+{
+    int partitionIndex; // Index of pivot after partition
+    if (low < high)
+    {
+        partitionIndex = partition(A, low, high); 
+        quickSort(A, low, partitionIndex - 1);  // sort left subarray 
+        quickSort(A, partitionIndex + 1, high); // sort right subarray
+    }
+}
+
+void printArray(int A[], int n)
+{
+    int i;
+    for(i = 0; i < n; i++)
+    {
+        printf("%d ", A[i]);
+    }
+    printf("\n");
+}
+  
+int main()
+{
+    int size,i;
+    printf("Enter the size of the array (the number of elements you want to sort): ");
+    scanf("%d",&size);
+    int arr[size];
+    time_t start,end;                          
+    for(i=0;i<size;i++) 
+    {
+        arr[i] = rand(); // Using random function to generate random numbers each time 
+    }
+    // Not required to print as input we will be taking is huge
+    /* printf("\nInput array: \n");
+       printArray(arr, size); */
+    start = clock();
+    quickSort(arr,0,size-1);
+    end = clock();
+    // Not required to print as output we will be taking is huge
+    /* printf("\nSorted array: \n");
+       printArray(arr, size); */
+    printf("\nTime taken: %f\n",(difftime(end,start)));
+    return 0;
+}
