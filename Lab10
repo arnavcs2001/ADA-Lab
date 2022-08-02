@@ -1,0 +1,93 @@
+// ADA 
+// Sort a given set of N integer elements using Heap Sort technique and compute its time taken.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <ctype.h>
+#include <conio.h>
+#include <time.h>
+#include <stdbool.h>
+
+void swap(int arr[],int *x,int *y)
+{
+    int temp = arr[*x];
+    arr[*x] = arr[*y];
+    arr[*y] = temp;
+}
+
+// Max heap
+void heapify(int arr[],int n,int i) // Converts the tree whose root node is i into a heap
+{
+    int largest = i;
+    int l = 2*i;
+    int r = (2*i) + 1;
+    if(l<=n && arr[l]>arr[largest])
+    {
+        largest = l;
+    }
+    if(r<=n && arr[r]>arr[largest])
+    {
+        largest = r;
+    }
+    if(largest != i)
+    {
+        swap(arr,&i,&largest);
+        heapify(arr,n,largest);
+    }
+}
+
+void build_heap(int arr[],int n) // Converts the array into a heap
+{
+    int i;
+    for(i=n/2;i>0;i--) // We start from n/2 as we don't consider leaf nodes and there are a total of n/2 leaf nodes so the remaining are n/2
+    {
+        heapify(arr,n,i);
+    }
+}
+
+void heapsort(int arr[],int n) 
+{
+    int j,k=1;
+    build_heap(arr,n);
+    for(j=n;j>1;j--)
+    {
+        swap(arr,&k,&j);
+        heapify(arr,j-1,1);
+    }
+}
+
+void printArray(int A[], int n)
+{
+    int i;
+    for(i = 1; i <= n; i++)
+    {
+        printf("%d ", A[i]);
+    }
+    printf("\n");
+}
+
+int main()
+{
+    int size,i;
+    printf("Enter the size of the array (the number of elements you want to sort): ");
+    scanf("%d",&size);
+    int arr[size];
+    time_t start,end;                          
+    for(i=1;i<=size;i++) 
+    {
+        arr[i] = rand(); // Using random function to generate random numbers each time 
+    }
+    // Not required to print as input we will be taking is huge
+    /* printf("\nInput array: \n");
+       printArray(arr, size); */
+    start = clock();
+    heapsort(arr,size);
+    end = clock();
+    // Not required to print as output we will be taking is huge
+    /* printf("\nSorted array: \n");
+       printArray(arr, size); */
+    printf("\nTime taken: %f\n",(difftime(end,start)));
+    return 0;
+}
