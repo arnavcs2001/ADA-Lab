@@ -1,0 +1,70 @@
+// ADA 
+// Implement 0/1 Knapsack problem using dynamic programming.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <ctype.h>
+#include <conio.h>
+#include <time.h>
+#include <stdbool.h>
+
+void knapsack(int v[],int w[],int n,int W)
+{
+    int k[20][20],i,j;
+    for(i=0;i<=n;i++)
+    {
+        for(j=0;j<=W;j++)
+        {
+            if(i == 0 || j == 0)
+            {
+                k[i][j] = 0;
+            }
+            else if(j < w[i])
+            {
+                k[i][j] = k[i-1][j];
+            }
+            else
+            {
+                if((k[i-1][j]) > (k[i-1][j-w[i]] + v[i]))
+                {
+                    k[i][j] = k[i-1][j];
+                }
+                else
+                {
+                    k[i][j] = k[i-1][j-w[i]] + v[i];
+                }
+            }
+        }
+    }
+ // Not required to print the table
+ /* printf("\n");
+    for(i=0;i<=n;i++)
+    {
+        for(j=0;j<=W;j++)
+        {
+            printf("%d ",k[i][j]);
+        }
+        printf("\n");
+    } */
+    printf("\nMaximum possible profit: %d\n",k[n][W]);
+}
+
+int main()
+{
+    int v[20],w[20],i,n,W;
+    printf("Enter number of objects: ");
+    scanf("%d",&n);
+    printf("\nEnter the capacity of knapsack: ");
+    scanf("%d",&W);
+    printf("\n");
+    for(i=1;i<=n;i++)
+    {
+        printf("Enter the weight and value of object %d: ",i);
+        scanf("%d",&w[i]);
+        scanf("%d",&v[i]);
+    }
+    knapsack(v,w,n,W);
+    return 0;
+}
