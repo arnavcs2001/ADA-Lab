@@ -1,0 +1,65 @@
+// ADA 
+// Implement All Pair Shortest paths problem using Floyd’s algorithm.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <ctype.h>
+#include <conio.h>
+#include <time.h>
+#include <stdbool.h>
+
+int min(int a,int b)
+{
+    if(a < b)
+    {
+        return a;
+    }
+    else
+    {
+        return b;
+    }
+}
+
+void floyd(int a[15][15],int d[15][15],int n)
+{
+    int i,j,k;
+    for(k=1;k<=n;k++)
+    {
+        for(i=1;i<=n;i++)
+        {
+            for(j=1;j<=n;j++)
+            {
+                d[i][j] = min(d[i][j],d[i][k] + d[k][j]);
+            }
+        }
+    }
+}
+
+int main()
+{
+    int a[15][15],d[15][15],n,i,j;
+    printf("Enter the number of vertices: ");
+    scanf("%d",&n);
+    printf("\nEnter the cost/weight matrix:\n");
+    for(i=1;i<=n;i++)
+    {
+        for(j=1;j<=n;j++)
+        {
+            scanf("%d",&a[i][j]);
+            d[i][j] = a[i][j]; // The initial distance matrix will be the same as the cost/weight matrix that the user enters.
+        }
+    }
+    floyd(a,d,n);
+    printf("\nThe final distance matrix is: \n");
+    for(i=1;i<=n;i++)
+    {
+        for(j=1;j<=n;j++)
+        {
+            printf("%d ",d[i][j]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
