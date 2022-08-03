@@ -1,0 +1,56 @@
+// ADA 
+// Implement Warshall’s algorithm using dynamic programming.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <ctype.h>
+#include <conio.h>
+#include <time.h>
+#include <stdbool.h>
+
+void warshall(int a[15][15],int r[15][15],int n)
+{
+    int i,j,k;
+    for(k=1;k<=n;k++)
+    {
+        for(i=1;i<=n;i++)
+        {
+            for(j=1;j<=n;j++)
+            {
+                if((r[i][j] == 1) || (r[i][k] == 1 && r[k][j] == 1))
+                {
+                    r[i][j] = 1;
+                }
+            }
+        }
+    }
+}
+
+int main()
+{
+    int a[15][15],r[15][15],n,i,j;
+    printf("Enter the number of vertices: ");
+    scanf("%d",&n);
+    printf("\nEnter the adjacency matrix:\n");
+    for(i=1;i<=n;i++)
+    {
+        for(j=1;j<=n;j++)
+        {
+            scanf("%d",&a[i][j]);
+            r[i][j] = a[i][j]; // The initial transitive closure matrix will be the same as the adjacency matrix that the user enters.
+        }
+    }
+    warshall(a,r,n);
+    printf("\nThe transitive closure of the diagraph (transititive closure matrix) is: \n");
+    for(i=1;i<=n;i++)
+    {
+        for(j=1;j<=n;j++)
+        {
+            printf("%d ",r[i][j]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
