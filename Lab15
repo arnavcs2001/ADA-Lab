@@ -1,0 +1,77 @@
+// ADA 
+// Find Minimum Cost Spanning Tree of a given undirected graph using Kruskal's algorithm.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <ctype.h>
+#include <conio.h>
+#include <time.h>
+#include <stdbool.h>
+#include <limits.h>
+    
+int i,j,a,b,u,v,n,ne=1,min,mincost=0,cost[15][15],parent[15];    
+    
+int find(int i,int parent[])
+{
+    while(parent[i]>0)
+    {
+        i = parent[i];
+    }
+    return i;
+}
+
+void uni(int i,int j,int parent[])
+{
+    parent[j] = i;
+}
+
+int main()
+{
+    printf("Enter the number of vertices: ");
+    scanf("%d",&n);
+    printf("\nEnter the cost adjacency matrix:\n");
+    for(i=1;i<=n;i++)
+    {
+        for(j=1;j<=n;j++)
+        {
+            scanf("%d",&cost[i][j]);
+            if(cost[i][j]==0)
+            {
+                cost[i][j]=999;
+            }
+        }
+    }
+    printf("\nThe edges of Minimum Cost Spanning Tree are: ");
+    printf("\nEdge  Weight\n");
+    while(ne < n)
+    {
+        min = 999;
+        for(i=1;i<=n;i++)
+        {
+            for(j=1;j<=n;j++)
+            {
+                if(cost[i][j] < min)
+                {
+                    min=cost[i][j];
+                    a=u=i;
+                    b=v=j;
+                }
+            }
+        }
+        u=find(u,parent);
+        v=find(v,parent);
+        if(u!=v) // If u = v then it means that the edges a and b have the same parent and hence we cannot have an edge between a and b as it would form a cycle
+        {
+            uni(u,v,parent); // This function will combine two subtrees into a single tree
+            ne = ne + 1;
+            printf("(%d,%d) = %d\n",a,b,min);
+            mincost = mincost + min;
+        }
+        cost[a][b]=cost[b][a]=999; // We make the current cost as 999 so that in the next iteration the same cost is not selected again
+    }
+    printf("\nMinimum cost = %d\n",mincost);
+    return 0;
+}
+    
